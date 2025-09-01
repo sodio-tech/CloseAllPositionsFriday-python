@@ -1,0 +1,10 @@
+.mypy_cache
+.venv
+.env
+uv.lock
+__pycache__
+celery.log
+celerybeat-*
+logs/
+bases/
+queue_db.sqlite3/
