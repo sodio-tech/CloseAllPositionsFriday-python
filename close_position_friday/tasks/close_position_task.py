@@ -34,12 +34,10 @@ def close_position_task():
 def process_close_position(client: Client):
     logfire.info(f"Processing close position at {now()}")
     total_logins = get_login_list()
-    print(total_logins)
     if not total_logins:
         logfire.error("No logins found", extra={"error": "No logins found"})
         return False
     account_numbers = total_logins
-    print(account_numbers)
 
     execute_close_position(account_numbers)
 
@@ -83,7 +81,6 @@ def get_login_list():
 
 def execute_close_position(trade_acc_data: list):       
         close_position = client.close_multiple_positions(trade_acc_data)
-        print(close_position)
         if not close_position:
             logfire.error("Failed to close positions", extra={"error": "Failed to close positions"})
             return False
