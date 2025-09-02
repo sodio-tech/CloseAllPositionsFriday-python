@@ -1,0 +1,27 @@
+name: Dev Pipeline
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+
+      - name: Execute commands on EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEV_SERVER_IP }}
+          username: ${{ secrets.DEV_SERVER_USER }}
+          key: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/ubuntu/CloseAllPositionsFriday-python
+            git stash && git pull
+            source /home/ubuntu/CloseAllPositionsFriday-python/.venv/bin/activate
+            uv sync
+            sudo systemctl restart cloneallpositions.service
