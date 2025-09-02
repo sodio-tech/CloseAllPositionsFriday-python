@@ -79,14 +79,14 @@ python manage.py qcluster --run-once
 
 ### Schedule Not Created
 
-1. **Check app configuration**: Ensure `eod_equity_monitor` is in `INSTALLED_APPS`
+1. **Check app configuration**: Ensure `close_position_friday` is in `INSTALLED_APPS`
 2. **Run migrations**: Ensure Django-Q tables are created
 3. **Manual scheduling**: Use the management command to manually create the schedule
 
 ### Task Not Executing
 
-1. **Check function path**: Ensure the task uses the full path `eod_equity_monitor.tasks.daily_report_task.daily_report_task`
-2. **Check import structure**: Ensure the task is properly imported in `eod_equity_monitor/tasks/__init__.py`
+1. **Check function path**: Ensure the task uses the full path `close_position_friday.tasks.daily_report_task.daily_report_task`
+2. **Check import structure**: Ensure the task is properly imported in `close_position_friday/tasks/__init__.py`
 3. **Test manually**: Try running the task manually to ensure it works
 
 ### Timezone Issues
@@ -102,7 +102,7 @@ The task uses the timezone configured in Django settings (`TIME_ZONE = "UTC"`). 
 
 ```bash
 # Test the task function directly
-python manage.py shell -c "from eod_equity_monitor.tasks.daily_report_task import daily_report_task; daily_report_task()"
+python manage.py shell -c "from close_position_friday.tasks.close_position_task import close_position_task; close_position_task()"
 
 # Test with QCluster
 python manage.py qcluster --run-once
@@ -110,7 +110,7 @@ python manage.py qcluster --run-once
 
 ### Adding Task Logic
 
-Edit `eod_equity_monitor/tasks/daily_report_task.py` to add your daily processing logic:
+Edit `close_position_friday/tasks/close_position_task.py` to add your daily processing logic:
 
 ```python
 def daily_report_task():
@@ -156,7 +156,7 @@ If you prefer using system cron instead of Django-Q:
 
 ```bash
 # Add to crontab (runs at midnight)
-0 0 * * * cd /path/to/your/project && /path/to/your/venv/bin/python manage.py shell -c "from eod_equity_monitor.tasks.daily_report_task import daily_report_task; daily_report_task()"
+0 0 * * * cd /path/to/your/project && /path/to/your/venv/bin/python manage.py shell -c "from eod_equity_monitor.tasks.close_position_task import close_position_task; close_position_task()"
 ```
 
 ## Monitoring
