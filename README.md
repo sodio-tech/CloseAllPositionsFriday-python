@@ -9,7 +9,7 @@ DjangoQ task schedule
 
 # Schedule task to run at a specific time
 
-python manage.py schedule_friday_task --day monday --time 10:04 --force
+python manage.py schedule_friday_task --day friday --time 21:55 --force
 
 #migrate command
 
